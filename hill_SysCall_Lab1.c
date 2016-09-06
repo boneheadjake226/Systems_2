@@ -22,7 +22,7 @@ int main(){
 		***********************************************************************
 	*/
 	
-	file_xx = open("/usr/class/cis/660/xx.xx", 0);
+	file_xx = open("/class/cis660/xx.xx", 0);
 	if(file_xx < 0){
 		printf("Error opening file: /usr/class/cis/660/xx.xx \nError Value: %i", file_xx);
 		return 1;
