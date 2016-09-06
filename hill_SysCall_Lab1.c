@@ -39,8 +39,6 @@ int main(){
 	do{
 		rw_return_val = read(file_xx, buffer, 100);
 
-		printf("\nI read 100 caracters\n");
-
 		if(rw_return_val != 0){
 			chars_read += rw_return_val;
 			
@@ -139,6 +137,78 @@ int main(){
 		*****************************************************************************
 	*/
 	
+	//Seek to position 1000 of XXX.txt
+	lseek(file_xxx, 1000, 0);
 	
+	//Write specified string at location overwriting existing chars
+	strcpy(buffer, "12345678abcdefgh");
+	write(file_xxx, buffer, 16);
+	
+	/*
+		---Part 4
+		*****************************************************************************
+	*/
+	
+
+	
+	//Seek to end of file WWW.txt
+	lseek(file_www, 0, 2);
+	
+	strcpy(buffer, "Jake Hill");
+	write(file_www, buffer, 9);
+	
+	/*
+		---Part 5
+		*****************************************************************************
+	*/
+	
+	//Seek to position 900 of WWW.txt
+	close(file_www);
+	open(file_www, 2);
+	
+	printf("\nBefore seeking backwards");
+	lseek(file_www, 900, 0);
+	
+	//make room to insert new string
+	char write_buffer[26];
+	char read_buffer[26];
+	
+	rw_return_val = read(file_www, write_buffer, 26);
+	rw_return_val = read(file_www, read_buffer, 26);
+	
+
+	lseek(file_www, 1, -26);
+	
+	printf("\nI got to the loop in part 5 \n");
+	
+	
+	do{
+		rw_return_val = write(file_www, write_buffer, rw_return_val);
+		strcpy(write_buffer, read_buffer);
+		rw_return_val = read(file_www, read_buffer, 26);
+		lseek(file_www, 1, -(rw_return_val));
+		
+	}while(rw_return_val != 0);
+	
+	lseek(file_www, 0, 900);
+	strcpy(buffer, "abcdefghijklmnopQRSTUVWXYZ");
+	write(file_www, buffer, 26);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	return 0;
 }
