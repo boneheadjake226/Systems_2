@@ -51,7 +51,7 @@ int main(){
 			write(file_xyz, abc_tag, 3);
 			chars_wrote += rw_return_val + 3;
 		}
-	}while (rw_return_val != 0)
+	}while (rw_return_val != 0);
 	
 	printf("Characters read: %i \nCharacters wrote: %i", chars_read, chars_wrote);
 	
@@ -115,7 +115,7 @@ int main(){
 				www_writes += write(file_www, buffer, rw_return_val);
 			}
 		}
-	}while(rw_return_val != 0)
+	}while(rw_return_val != 0);
 	
 	printf("Chars written to XXX.txt: %i	\nChars written to WWW.txt: %i\n", xxx_writes, www_writes);
 	
