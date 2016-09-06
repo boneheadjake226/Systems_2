@@ -22,7 +22,7 @@ int main(){
 		***********************************************************************
 	*/
 	
-	file_xx = open("/class/cis660/xx.xx", 0);
+	file_xx = open("xx.xx", 0);
 	if(file_xx < 0){
 		printf("Error opening file: /usr/class/cis/660/xx.xx \nError Value: %i", file_xx);
 		return 1;
@@ -38,10 +38,14 @@ int main(){
 	char abc_tag[4] = "ABC";
 	do{
 		rw_return_val = read(file_xx, buffer, 100);
+
+		printf("\nI read 100 caracters\n");
+
 		if(rw_return_val != 0){
 			chars_read += rw_return_val;
 			
 			if(rw_return_val < 100){
+				
 				write(file_xyz, buffer, rw_return_val);
 
 			}else{
@@ -52,18 +56,27 @@ int main(){
 			chars_wrote += rw_return_val + 3;
 		}
 	}while (rw_return_val != 0);
-	
-	printf("Characters read: %i \nCharacters wrote: %i", chars_read, chars_wrote);
-	
+
 	close(file_xx);
+	close(file_xyz);	
+	printf("Characters read: %d \nCharacters wrote: %d \n", chars_read, chars_wrote);
+	
+
 	chars_read = 0;
 	chars_wrote = 0;
+	
+	
 	/*
 		---Part 2
 		*****************************************************************************
 	*/
 	
 	int file_xxx, file_www, xxx_writes = 0, www_writes = 0;
+	file_xyz = open("XYZ.doc", 0);
+	if(file_xyz < 0){
+		printf("Error opening file: /usr/class/cis/660/xx.xx \nError Value: %i", file_xx);
+		return 1;
+	}
 	file_xxx = creat("XXX.txt", 0751);
 	if(file_xxx < 0){
 		printf("Error creating file: XXX.doc \nError Value: %i", file_xxx);
@@ -117,25 +130,14 @@ int main(){
 		}
 	}while(rw_return_val != 0);
 	
-	printf("Chars written to XXX.txt: %i	\nChars written to WWW.txt: %i\n", xxx_writes, www_writes);
+	
+	printf("Chars written to XXX.txt: %i\nChars written to WWW.txt: %i\n", xxx_writes, www_writes);
 	
 	
 	/*
 		---Part 3
 		*****************************************************************************
 	*/
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	return 0;
