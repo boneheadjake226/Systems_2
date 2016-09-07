@@ -81,7 +81,7 @@ int main(){
 		return 1;
 	}
 	file_www = creat("WWW.txt", 0751);
-	if(file_xxx < 0){
+	if(file_www < 0){
 		printf("Error creating file: WWW.doc \nError Value: %i", file_www);
 		return 1;
 	}
@@ -164,42 +164,54 @@ int main(){
 	
 	//Seek to position 900 of WWW.txt
 	close(file_www);
-	open(file_www, 2);
+	file_www = open("WWW.txt", 2);
+	if(file_www < 0){
+		printf("Error creating file: WWW.doc \nError Value: %i", file_www);
+		return 1;
+	}
 	
-	printf("\nBefore seeking backwards");
-	lseek(file_www, 900, 0);
+	int file_www_end = lseek(file_www, 0, 2);
+	int curr_offset = lseek(file_www, 900, 0);
+	
 	
 	//make room to insert new string
 	char write_buffer[26];
-	char read_buffer[26];
+	char read_buffer[26]; 
+	
 	
 	rw_return_val = read(file_www, write_buffer, 26);
-	rw_return_val = read(file_www, read_buffer, 26);
 	
+	
+	//printf("\nwrite_buffer : %s id: %d \nread_buffer: %s id: %d", write_buffer, &write_buffer, read_buffer, &read_buffer);
 
-	lseek(file_www, 1, -26);
-	
-	printf("\nI got to the loop in part 5 \n");
 	
 	
-	do{
-		rw_return_val = write(file_www, write_buffer, rw_return_val);
-		strcpy(write_buffer, read_buffer);
+	printf("\nBefore loop rw_return_val: %d", rw_return_val);
+	printf("\nfile end: %d \nCurrent Position: %d", file_www_end, curr_offset);
+	while(rw_return_val != 0){
 		rw_return_val = read(file_www, read_buffer, 26);
-		lseek(file_www, 1, -(rw_return_val));
+		lseek(file_www, -26, 1);
+		write(file_www, write_buffer, rw_return_val);
 		
-	}while(rw_return_val != 0);
+		printf("\nWrite Buffer: %s", write_buffer);
+		printf("\nrw_return val: %d", rw_return_val);
+		
+		for(i = 0; i < 26; i++){
+			write_buffer[i] = read_buffer[i];
+		}
+		
+	}
 	
-	lseek(file_www, 0, 900);
+	lseek(file_www, 900, 0);
 	strcpy(buffer, "abcdefghijklmnopQRSTUVWXYZ");
 	write(file_www, buffer, 26);
 	
 	
+	close(file_www);
 	
 	
 	
-	
-	
+
 	
 	
 	
