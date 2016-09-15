@@ -4,11 +4,15 @@
 	Lab: 	1
 	
 	TODO: Fill in compilation command
-	Compilation command: $ gcc -o Lab1 hill_SysCall_Lab1.c
+	Compilation command: $ gcc -o Lab1 hill_SysCall_Lab1.c -o sys_call
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <string.h>
 
 
@@ -22,9 +26,9 @@ int main(){
 		***********************************************************************
 	*/
 	
-	file_xx = open("xx.xx", 0);
+	file_xx = open("/usr/class/cis660/xx.xx", 0);
 	if(file_xx < 0){
-		printf("Error opening file: /usr/class/cis/660/xx.xx \nError Value: %i", file_xx);
+		printf("Error opening file: /usr/class/cis660/xx.xx \nError Value: %i", file_xx);
 		return 1;
 	}
 	
@@ -144,6 +148,8 @@ int main(){
 	strcpy(buffer, "12345678abcdefgh");
 	write(file_xxx, buffer, 16);
 	
+	close(file_xxx);
+	
 	/*
 		---Part 4
 		*****************************************************************************
@@ -181,44 +187,162 @@ int main(){
 	
 	rw_return_val = read(file_www, write_buffer, 26);
 	
-	
-	//printf("\nwrite_buffer : %s id: %d \nread_buffer: %s id: %d", write_buffer, &write_buffer, read_buffer, &read_buffer);
-
-	
-	
-	printf("\nBefore loop rw_return_val: %d", rw_return_val);
-	printf("\nfile end: %d \nCurrent Position: %d", file_www_end, curr_offset);
-	while(rw_return_val != 0){
+	//shift untill end of file is read
+	while(rw_return_val == 26){
 		rw_return_val = read(file_www, read_buffer, 26);
+		if(rw_return_val < 0){
+			printf("\nRead Error from WWW.txt");
+			exit(rw_return_val);
+		}
 		lseek(file_www, -26, 1);
 		write(file_www, write_buffer, rw_return_val);
-		
-		printf("\nWrite Buffer: %s", write_buffer);
-		printf("\nrw_return val: %d", rw_return_val);
 		
 		for(i = 0; i < 26; i++){
 			write_buffer[i] = read_buffer[i];
 		}
 		
 	}
+	//Shift original end of file
+	rw_return_val = write(file_www, write_buffer, rw_return_val);
+	if(rw_return_val < 0){
+		printf("\nWrite Error to WWW.txt");
+		exit(rw_return_val);
+	}
 	
+	//Insert new string into allocated space
 	lseek(file_www, 900, 0);
 	strcpy(buffer, "abcdefghijklmnopQRSTUVWXYZ");
 	write(file_www, buffer, 26);
 	
 	
 	close(file_www);
+	if(file_www < 0){
+		printf("Error closing file WWW.txt");
+		exit(file_www);
+	}
 	
 	
-	
+	/*
+		---Part 6
+		*****************************************************************************
+	*/	
 
+	int file_zzz = creat("ZZZ.txt", 0751);
+	if(file_zzz < 0){
+		printf("\nError creating file ZZZ.txt");
+		exit(file_zzz);
+	}
+	
+	file_xxx = open("XXX.txt", 0);
+	if(file_xxx < 0){
+		printf("\nError opening file XXX.txt");
+		exit(file_xxx);
+	}
+	
+	//Copy XXX.txt into ZZZ.txt 200 chars at a time
+	while(rw_return_val != 0){
+		rw_return_val = read(file_xxx, buffer, 200);
+		if(rw_return_val < 0){
+			printf("Read Error XXX.txt");
+			exit(rw_return_val);
+		}
+		
+		rw_return_val = write(file_zzz, buffer, rw_return_val);
+		if(rw_return_val < 0){
+			printf("Write Error ZZZ.txt");
+			exit(rw_return_val);
+		}
+	}
+	
+	if(close(file_xxx) < 0){
+		printf("Close error XXX.txt");
+		exit(1);
+	}
+	
+	if(close(file_zzz) < 0){
+		printf("Close error XXX.txt");
+		exit(1);
+	}
 	
 	
+	/*
+		---Part 7
+		*****************************************************************************
+	*/
 	
+	chars_wrote = 0;
+	file_www = open("WWW.txt", 0);
+	if(file_www < 0){
+		printf("Open error WWW.txt");
+		exit(file_www);
+	}
+	file_zzz = open("ZZZ.txt", 1);
+	if(file_zzz < 0){
+		printf("Open error ZZZ.txt");
+		exit(file_zzz);
+	}
 	
+	lseek(file_www, -1, 2);
+	lseek(file_zzz, 0, 2);
 	
+	//Write WWW.txt in reverse one char at a time
+	while(lseek(file_www, 0, 1) != 0){
+		read(file_www, buffer, 1);
+		chars_wrote += write(file_zzz, buffer, 1);
+		lseek(file_www, -2, 1);
+	}
+	//Write first character in WWW.txt to end of ZZZ.txt
+	read(file_www, buffer, 1);
+	chars_wrote += write(file_zzz, buffer, 1);
 	
+	if(close(file_zzz) < 0){
+		printf("Close error XXX.txt");
+		exit(1);
+	}
 	
+	if(close(file_www) < 0){
+		printf("Error closing file WWW.txt");
+		exit(file_www);
+	}
+	
+	printf("Chars wrote to ZZZ.txt: %d\n", chars_wrote);
+	
+	/*
+		---Part 8
+		*****************************************************************************
+	*/		
+	
+	file_zzz = open("ZZZ.txt", 0);
+	i = 1;
+	char sub_buff[81];
+	
+	while(read(file_zzz, buffer, 80) > 0){
+		if(i == 100){
+			memcpy(sub_buff, buffer, 80);
+			printf("%s \n", sub_buff);
+			i = 1;
+		}else{
+			i++;
+		}
+	}
+	
+	if(close(file_zzz) < 0){
+		printf("Close error XXX.txt");
+		exit(1);
+	}
+	
+	if(unlink("XXX.txt") < 0){
+		printf("Error Deleting file XXX.txt\n");
+		exit(1);
+	}
+	if(unlink("ZZZ.txt") < 0){
+		printf("Error Deleting file ZZZ.txt\n");
+		exit(1);
+	}
+	if(unlink("WWW.txt") < 0){
+		printf("Error Deleting file WWW.txt\n");
+		exit(1);
+	}	
 	
 	
 
