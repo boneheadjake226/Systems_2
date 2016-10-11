@@ -1,0 +1,24 @@
+/*in the code above include some wait and signal operations on semaphores. Do not over-synchronize. */
+
+Code of Proc2
+int main(){
+  int i, internal_reg;
+
+/* synchronize with Proc1, Proc3 and Proc4 (4 process 4 way synchronization)*/
+
+  for (i = 0, i < 2000; i++)
+  {
+    internal_reg = Account [1];      /*Proc3 takes from Account[2]*/          
+    internal_reg = internal_reg - 200;
+    Account[1] = internal_reg;
+
+  /* same thing, except we're adding $200 to Account2 now... */
+    internal_reg = Account [2];      /*Proc3 adds into Account[0]*/
+    internal_reg = internal_reg + 200;
+    Account[2] = internal_reg;
+
+    }
+/* Add a code that prints contents of each account
+  and their sum after 100th, 200th, 300th, ...., and 1900th iterations*/
+}
+/*in the code above include some wait and signal operations on semaphores. Do not over-synchronize. */

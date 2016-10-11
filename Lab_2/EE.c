@@ -1,10 +1,12 @@
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 //for file opening and creating
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include<signal.h>
 
 void main(){
 	int file_xyz = open("XYZ.txt", 0), rw_return;
