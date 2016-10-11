@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 struct z_item{
-	char chars[3];
+	char * chars;
 	int num;
 } z_item;
 
@@ -41,7 +41,7 @@ int main(){
 		item.chars = "ZZ";
 		
 		sem_wait(z_full);
-		z_buff[in] = item;
+		buff_z[in] = item;
 		in = (in + 1) % 30;
 		sem_signal(z_empty);
 	}

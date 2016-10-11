@@ -4,24 +4,24 @@
 
 struct x_item{
 	//must always be "xx"
-	char chars[3];
+	char * chars;
 	int num;
 } x_item;
 
 struct y_item{
 	//must always be "yyy"
-	char chars[4];
+	char * chars;
 	int num;
 } y_item;
 
 struct z_item{
 	//must always be "zz"
-	char chars[3];
+	char * chars;
 	int num;
 } z_item;
 
 int main(){
-	int x = 0, w = 0, z = 0;
+	int x = 0, y = 0, z = 0, i = 0;
 	int x_full, x_empty, y_full, y_empty, z_full, z_empty, w_sync;
 	
 	//shared buffers

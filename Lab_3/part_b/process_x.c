@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 struct x_item{
-	char chars[3];
+	char * chars;
 	int num;
 } x_item;
 
@@ -11,13 +11,13 @@ struct x_item{
 //Included to open and delete shared buffers, not modify.
 struct y_item{
 	//must always be "yyy"
-	char chars[4];
+	char * chars;
 	int num;
 } y_item;
 
 struct z_item{
 	//must always be "zz"
-	char chars[3];
+	char * chars;
 	int num;
 } z_item;
 //////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ int main(){
 		item.chars = "xx";
 		
 		sem_wait(x_full);
-		x_buff[in] = item;
+		buff_x[in] = item;
 		in = (in + 1) % 20;
 		sem_signal(x_empty);
 	}

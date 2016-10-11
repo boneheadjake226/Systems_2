@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 struct y_item{
-	char chars[3];
+	char * chars;
 	int num;
 } y_item;
 
@@ -41,7 +41,7 @@ int main(){
 		item.chars = "YYY";
 		
 		sem_wait(y_full);
-		y_buff[in] = item;
+		buff_y[in] = item;
 		in = (in + 1) % 30;
 		sem_signal(y_empty);
 	}
