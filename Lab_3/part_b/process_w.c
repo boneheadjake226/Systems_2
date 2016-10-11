@@ -29,7 +29,7 @@ int main(){
 	shm_get(101, (void**)&buff_x, 20*sizeof(x_item));
 	struct y_item *buff_y;
 	shm_get(101, (void**)&buff_y, 30*sizeof(y_item));
-	struct x_item *buff_z;
+	struct z_item *buff_z;
 	shm_get(101, (void**)&buff_z, 25*sizeof(z_item));
 	
 	//item slots for consumption
