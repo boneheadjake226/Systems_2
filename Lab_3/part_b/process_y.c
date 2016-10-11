@@ -30,12 +30,13 @@ int main(){
 	sem_wait(y_empty);
 	sem_wait(y_empty);
 	
+	printf("\ny made it to the for loop");
 	for(i = 0; i < 500; i++){
 		
 		if( (i % 75) == 0 && i != 0){
 			usleep(300);
 		}
-		
+		printf("\ny producing");
 		struct y_item item;
 		item.num = i + 1;
 		item.chars = "YYY";

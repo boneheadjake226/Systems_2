@@ -30,12 +30,13 @@ int main(){
 	sem_wait(z_empty);
 	sem_wait(z_empty);
 	
+	printf("\nz made it to the for loop");
 	for(i = 0; i < 500; i++){
 		
 		if( (i % 60) == 0 && i != 0){
 			usleep(300);
 		}
-		
+		 printf("\nz producing");
 		struct z_item item;
 		item.num = i + 1;
 		item.chars = "ZZ";
