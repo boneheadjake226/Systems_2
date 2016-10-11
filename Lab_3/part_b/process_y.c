@@ -20,7 +20,7 @@ int main(){
 	w_sync = sem_open(67);
 	
 	//shared buffer
-	y_item *buff_y;
+	struct y_item *buff_y;
 	int buff_y_id = shm_get(101, (void**)&buff_y, 30*sizeof(y_item));
 	
 	sem_signal(w_sync);
@@ -36,7 +36,7 @@ int main(){
 			usleep(300);
 		}
 		
-		y_item item;
+		struct y_item item;
 		item.num = i + 1;
 		item.chars = "YYY";
 		

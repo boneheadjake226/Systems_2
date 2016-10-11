@@ -36,11 +36,11 @@ int main(){
 	w_sync = sem_open(67);
 	
 	//shared buffers
-	x_item *buff_x;
+	struct x_item *buff_x;
 	int buff_x_id = shm_get(101, (void**)&buff_x, 20*sizeof(x_item));
-	y_item *buff_y;
+	struct y_item *buff_y;
 	int buff_y_id = shm_get(101, (void**)&buff_y, 30*sizeof(y_item));
-	x_item *buff_z;
+	struct x_item *buff_z;
 	int buff_z_id = shm_get(101, (void**)&buff_z, 25*sizeof(z_item));
 	
 	sem_signal(w_sync);
@@ -56,7 +56,7 @@ int main(){
 			usleep(300);
 		}
 		
-		x_item item;
+		struct x_item item;
 		item.num = i + 1;
 		item.chars = "xx";
 		

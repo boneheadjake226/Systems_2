@@ -25,17 +25,17 @@ int main(){
 	int x_full, x_empty, y_full, y_empty, z_full, z_empty, w_sync;
 	
 	//shared buffers
-	x_item *buff_x;
+	struct x_item *buff_x;
 	shm_get(101, (void**)&buff_x, 20*sizeof(x_item));
-	y_item *buff_y;
+	struct y_item *buff_y;
 	shm_get(101, (void**)&buff_y, 30*sizeof(y_item));
-	x_item *buff_z;
+	struct x_item *buff_z;
 	shm_get(101, (void**)&buff_z, 25*sizeof(z_item));
 	
 	//item slots for consumption
-	z_item item_z;
-	y_item item_y;
-	x_item item_x;
+	struct z_item item_z;
+	struct y_item item_y;
+	struct x_item item_x;
 	
 	//buffer access semaphores
 	x_full = sem_create(60, 20);

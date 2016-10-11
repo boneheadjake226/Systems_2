@@ -20,7 +20,7 @@ int main(){
 	w_sync = sem_open(67);
 	
 	//shared buffer
-	z_item *buff_z;
+	struct z_item *buff_z;
 	int buff_z_id = shm_get(101, (void**)&buff_z, 30*sizeof(z_item));
 	
 	sem_signal(w_sync);
@@ -36,7 +36,7 @@ int main(){
 			usleep(300);
 		}
 		
-		z_item item;
+		struct z_item item;
 		item.num = i + 1;
 		item.chars = "ZZ";
 		
