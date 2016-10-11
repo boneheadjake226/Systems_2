@@ -1,6 +1,7 @@
 #include "ssem.h"
 #include "sshm.h"
 #include <stdio.h>
+#include <unistd.h>
 
 struct x_item{
 	char * chars;

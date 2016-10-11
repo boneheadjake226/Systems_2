@@ -1,6 +1,7 @@
 #include "ssem.h"
 #include "sshm.h"
 #include <stdio.h>
+#include <unistd.h>
 
 struct z_item{
 	char * chars;
@@ -32,7 +33,7 @@ int main(){
 	
 	printf("\nz made it to the for loop");
 	for(i = 0; i < 500; i++){
-		
+		printf("\ny made it to the for loop");
 		if( (i % 60) == 0 && i != 0){
 			usleep(300);
 		}
