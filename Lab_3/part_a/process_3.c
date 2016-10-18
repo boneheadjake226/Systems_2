@@ -1,8 +1,11 @@
+/*
+  code of process 3
+*/
+
 #include "ssem.h"
 #include "sshm.h"
 #include <stdio.h>
 
-//Code of Proc3
 int main(){
   int i, internal_reg;
   
@@ -10,6 +13,7 @@ int main(){
   int s2 = sem_open(67);
   int s3 = sem_open(68);
   int s4 = sem_open(69);
+  int mutex = sem_open(70);
   
   int *Account;
   shm_get(1256, (void**)&Account, 3*sizeof(int));
@@ -23,6 +27,18 @@ int main(){
   sem_wait(s3);
   
   for (i = 0; i < 2000; i++){
+    sem_wait(mutex);
+    
+    //Remove $200 from account 3 for transfer.
+    internal_reg = Account [2];      /*Proc3 takes from Account[2]*/          
+    internal_reg = internal_reg - 200;
+    Account[2] = internal_reg;
+    
+    //Complete transfer from account 3 to account 1.
+    internal_reg = Account [0];      /*Proc3 adds into Account[0]*/
+    internal_reg = internal_reg + 200;
+    Account[0] = internal_reg;
+    
     if( i == 500 || i == 1500){
       usleep(300);
     }
@@ -32,21 +48,8 @@ int main(){
                 Account[0], Account[1], Account[2]);
       printf("\nAccounts sum: %d", (Account[0] + Account[1] + Account[2]));
     }
-    //Remove $200 from account 3 for transfer.
-    sem_wait(s3);
-    sem_wait(s1);
-    internal_reg = Account [3];      /*Proc3 takes from Account[2]*/          
-    internal_reg = internal_reg - 200;
-    Account[3] = internal_reg;
     
-    
-    //Complete transfer from account 3 to account 1.
-    
-    internal_reg = Account [0];      /*Proc3 adds into Account[0]*/
-    internal_reg = internal_reg + 200;
-    Account[0] = internal_reg;
-    sem_signal(s3);
-    sem_signal(s1);
+    sem_signal(mutex);
   }
   
   sem_signal(s4);

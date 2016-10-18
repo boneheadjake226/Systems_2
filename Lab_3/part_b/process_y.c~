@@ -41,7 +41,7 @@ int main(){
 		//item.num = i + 1;
 		//char yyy[4] = "YYY";
 		//item.chars = yyy;
-		//printf(" %d%s", item.num, item.chars);
+		printf(" %d%s", item.num, item.chars);
 		
 		sem_wait(y_full);
 		buff_y[in] = item;

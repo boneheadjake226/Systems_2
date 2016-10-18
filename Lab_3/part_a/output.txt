@@ -1,0 +1,198 @@
+% process_1
+
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9800 Account2: 10000 Account3: 10200
+Accounts sum: 30000
+From Process1 
+ Account1: 9400 Account2: 10000 Account3: 10600
+Accounts sum: 30000
+From Process1 
+ Account1: 9400 Account2: 10000 Account3: 10600
+Accounts sum: 30000
+From Process1 
+ Account1: 9400 Account2: 9800 Account3: 10800
+Accounts sum: 30000
+From Process1 
+ Account1: 9200 Account2: 9200 Account3: 11600
+Accounts sum: 30000
+From Process1 
+ Account1: 9200 Account2: 9200 Account3: 11600
+Accounts sum: 30000
+From Process1 
+ Account1: 9200 Account2: 9200 Account3: 11600
+Accounts sum: 30000
+
+/////////////////////////////////////////////////////////////
+% process_2
+
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 10000 Account2: 9800 Account3: 10200
+Accounts sum: 30000
+From Process2 
+ Account1: 9400 Account2: 9800 Account3: 10800
+Accounts sum: 30000
+From Process2 
+ Account1: 9400 Account2: 9800 Account3: 10800
+Accounts sum: 30000
+From Process2 
+ Account1: 9600 Account2: 9600 Account3: 10800
+Accounts sum: 30000
+From Process2 
+ Account1: 9400 Account2: 9000 Account3: 11600
+Accounts sum: 30000
+From Process2 
+ Account1: 9400 Account2: 9000 Account3: 11600
+Accounts sum: 30000
+From Process2 
+ Account1: 9400 Account2: 9000 Account3: 11600
+Accounts sum: 30000
+
+////////////////////////////////////////////////////////////////
+% process_3
+
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 10000 Account2: 10000 Account3: 10000
+Accounts sum: 30000
+From Process3 
+ Account1: 9600 Account2: 9800 Account3: 10600
+Accounts sum: 30000
+From Process3 
+ Account1: 9600 Account2: 9800 Account3: 10600
+Accounts sum: 30000
+From Process3 
+ Account1: 9600 Account2: 9800 Account3: 10600
+Accounts sum: 30000
+From Process3 
+ Account1: 9400 Account2: 9200 Account3: 11400
+Accounts sum: 30000
+From Process3 
+ Account1: 9400 Account2: 9200 Account3: 11400
+Accounts sum: 30000
+From Process3 
+ Account1: 9400 Account2: 9200 Account3: 11400
+Accounts sum: 30000
+
+
+/////////////////////////////////////////////////////
+% process_4
+
+Times account sum was not $30,000: 0
+
+
