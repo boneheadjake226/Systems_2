@@ -4,10 +4,10 @@
 #include <unistd.h>
 
 #define ZZ "ZZ"
-struct z_item{
+typedef struct z_item{
 	char * chars;
 	int num;
-} z_item;
+};
 
 int main(){
 	int i, in = 0;
@@ -22,7 +22,7 @@ int main(){
 	w_sync = sem_open(67);
 	
 	//shared buffer
-	struct z_item *buff_z;
+	z_item *buff_z;
 	int buff_z_id = shm_get(103, (void**)&buff_z, 25*sizeof(z_item));
 	
 	sem_signal(w_sync);
@@ -36,7 +36,7 @@ int main(){
 		if( (i % 60) == 0 && i != 0){
 			usleep(300);
 		}
-		struct z_item item = {.num = i+1, .chars = "ZZ"};
+		z_item item = {.num = i+1, .chars = "ZZ"};
 		//item.num = i + 1;
 		//char zz[3] = "ZZ";
 		//item.chars = "ZZ";

@@ -4,10 +4,10 @@
 #include <unistd.h>
 
 #define YYY "YYY"
-struct y_item{
+typedef struct y_item{
 	char * chars;
 	int num;
-} y_item;
+};
 
 int main(){
 	int i, in = 0;
@@ -22,7 +22,7 @@ int main(){
 	w_sync = sem_open(67);
 	
 	//shared buffer
-	struct y_item *buff_y;
+	y_item *buff_y;
 	int buff_y_id = shm_get(102, (void**)&buff_y, 30*sizeof(y_item));
 	
 	sem_signal(w_sync);
@@ -37,7 +37,7 @@ int main(){
 		if( (i % 75) == 0 && i != 0){
 			usleep(300);
 		}
-		struct y_item item = {.num = i + 1, .chars = "YYY"};
+		y_item item = {.num = i + 1, .chars = "YYY"};
 		//item.num = i + 1;
 		//char yyy[4] = "YYY";
 		//item.chars = yyy;

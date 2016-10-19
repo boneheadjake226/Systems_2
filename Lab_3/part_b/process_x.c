@@ -4,24 +4,24 @@
 #include <unistd.h>
 
 #define XX "xx"
-struct x_item{
+typedef struct x_item{
 	char * chars;
 	int num;
-} x_item;
+};
 
 /////////////////////////////////////////////////////////////
 //Included to open and delete shared buffers, not modify.
-struct y_item{
+typedef struct y_item{
 	//must always be "yyy"
 	char * chars;
 	int num;
-} y_item;
+};
 
-struct z_item{
+typedef struct z_item{
 	//must always be "zz"
 	char * chars;
 	int num;
-} z_item;
+};
 //////////////////////////////////////////////////////////////
 
 
@@ -38,11 +38,11 @@ int main(){
 	w_sync = sem_open(67);
 	
 	//shared buffers
-	struct x_item *buff_x;
+	x_item *buff_x;
 	int buff_x_id = shm_get(101, (void**)&buff_x, 20*sizeof(x_item));
-	struct y_item *buff_y;
+	y_item *buff_y;
 	int buff_y_id = shm_get(102, (void**)&buff_y, 30*sizeof(y_item));
-	struct x_item *buff_z;
+	x_item *buff_z;
 	int buff_z_id = shm_get(103, (void**)&buff_z, 25*sizeof(z_item));
 	
 	sem_signal(w_sync);
@@ -58,7 +58,7 @@ int main(){
 			usleep(300);
 		}
 		
-		struct x_item item = {.num = i + 1, .chars = "xx"};
+		x_item item = {.num = i + 1, .chars = "xx"};
 		//item.num = i + 1;
 		//char xx[3] = "xx";
 		//item.chars = xx;
@@ -66,7 +66,7 @@ int main(){
 		sem_wait(x_full);
 		buff_x[in] = item;
 		
-		printf(" %d%s", item.num, item.chars);
+		printf(" %d%s", buff_x[in].num, buff_x[in].chars);
 		
 		in = (in + 1) % 20;
 		sem_signal(x_empty);

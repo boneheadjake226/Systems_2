@@ -3,19 +3,19 @@
 #include <stdio.h>
 #include <unistd.h>
 
-struct x_item{
+typedef struct x_item{
 	//must always be "xx"
 	char * chars;
 	int num;
 } x_item;
 
-struct y_item{
+typedef struct y_item{
 	//must always be "yyy"
 	char * chars;
 	int num;
 } y_item;
 
-struct z_item{
+typedef struct z_item{
 	//must always be "zz"
 	char * chars;
 	int num;
@@ -26,11 +26,11 @@ int main(){
 	int x_full, x_empty, y_full, y_empty, z_full, z_empty, w_sync;
 	
 	//shared buffers
-	struct x_item *buff_x;
+	x_item *buff_x;
 	shm_get(101, (void**)&buff_x, 20*sizeof(x_item));
-	struct y_item *buff_y;
+	y_item *buff_y;
 	shm_get(102, (void**)&buff_y, 30*sizeof(y_item));
-	struct z_item *buff_z;
+	z_item *buff_z;
 	shm_get(103, (void**)&buff_z, 25*sizeof(z_item));
 	
 	//item slots for consumption
@@ -61,19 +61,19 @@ int main(){
 		}
 		
 		sem_wait(x_empty);
-		struct x_item item_x = {.num = buff_x[x].num, .chars = buff_x[x].chars};
+		x_item item_x = {.num = buff_x[x].num, .chars = buff_x[x].chars};
 		//printf(" %d%s", buff_x[x].num, buff_x[x].chars);
 		x = (x + 1) % 20;
 		sem_signal(x_full);
 		
 		sem_wait(y_empty);
-		struct y_item item_y = {.num = buff_y[y].num, .chars = buff_y[y].chars};
+		y_item item_y = {.num = buff_y[y].num, .chars = buff_y[y].chars};
 		y = (y + 1) % 30;
 		//printf(" %d%s", item_y.num, item_y.chars);
 		sem_signal(y_full);
 		
 		sem_wait(z_empty);
-		struct z_item item_z = {.num = buff_z[z].num, .chars = buff_z[z].chars};
+		z_item item_z = {.num = buff_z[z].num, .chars = buff_z[z].chars};
 		z = (z + 1) % 25;
 		//printf(" %d%s", item_z.num, item_z.chars);
 		sem_signal(z_full);
