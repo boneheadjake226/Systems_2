@@ -4,10 +4,10 @@
 #include <unistd.h>
 
 #define YYY "YYY"
-typedef struct y_item{
+typedef struct {
 	char * chars;
 	int num;
-};
+}y_item;
 
 int main(){
 	int i, in = 0;

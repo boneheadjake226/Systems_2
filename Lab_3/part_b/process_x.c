@@ -4,24 +4,24 @@
 #include <unistd.h>
 
 #define XX "xx"
-typedef struct x_item{
+typedef struct{
 	char * chars;
 	int num;
-};
+} x_item;
 
 /////////////////////////////////////////////////////////////
 //Included to open and delete shared buffers, not modify.
-typedef struct y_item{
+typedef struct {
 	//must always be "yyy"
 	char * chars;
 	int num;
-};
+}y_item;
 
-typedef struct z_item{
+typedef struct {
 	//must always be "zz"
 	char * chars;
 	int num;
-};
+}z_item;
 //////////////////////////////////////////////////////////////
 
 

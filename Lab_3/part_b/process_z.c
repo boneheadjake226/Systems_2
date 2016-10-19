@@ -4,10 +4,10 @@
 #include <unistd.h>
 
 #define ZZ "ZZ"
-typedef struct z_item{
+typedef struct{
 	char * chars;
 	int num;
-};
+}z_item;
 
 int main(){
 	int i, in = 0;

@@ -3,19 +3,19 @@
 #include <stdio.h>
 #include <unistd.h>
 
-typedef struct x_item{
+typedef struct{
 	//must always be "xx"
 	char * chars;
 	int num;
 } x_item;
 
-typedef struct y_item{
+typedef struct{
 	//must always be "yyy"
 	char * chars;
 	int num;
 } y_item;
 
-typedef struct z_item{
+typedef struct{
 	//must always be "zz"
 	char * chars;
 	int num;
