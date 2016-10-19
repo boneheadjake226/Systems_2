@@ -58,7 +58,7 @@ int main(){
 			usleep(300);
 		}
 		
-		struct x_item item = {.num = i + 1, .chars = "xx"};
+		struct x_item item = {.num = i + 1, .chars = XX};
 		//item.num = i + 1;
 		//char xx[3] = "xx";
 		//item.chars = xx;
