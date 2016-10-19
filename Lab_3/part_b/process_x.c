@@ -66,7 +66,7 @@ int main(){
 		sem_wait(x_full);
 		buff_x[in] = item;
 		
-		printf(" %d%s", item_x.num, item_x.chars);
+		printf(" %d%s", item.num, item.chars);
 		
 		in = (in + 1) % 20;
 		sem_signal(x_empty);
