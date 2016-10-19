@@ -58,7 +58,7 @@ int main(){
 			usleep(300);
 		}
 		
-		struct x_item item = {.num = i + 1, .chars = XX};
+		struct x_item item = {.num = i + 1, .chars = "xx"};
 		//item.num = i + 1;
 		//char xx[3] = "xx";
 		//item.chars = xx;
@@ -66,7 +66,7 @@ int main(){
 		sem_wait(x_full);
 		buff_x[in] = item;
 		
-		printf(" %d%s", buff_x[in].num, buff_x[in].chars);
+		printf(" %d%s", item_x.num, item_x.chars);
 		
 		in = (in + 1) % 20;
 		sem_signal(x_empty);
