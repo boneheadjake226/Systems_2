@@ -62,7 +62,7 @@ int main(){
 		
 		sem_wait(x_empty);
 		x_item item_x = {.num = buff_x[x].num, .chars = buff_x[x].chars};
-		printf(" %d%s", buff_x[x].num, buff_x[x].chars);
+		printf(" %d%s", item_x.num, item_x.chars);
 		x = (x + 1) % 20;
 		sem_signal(x_full);
 		
