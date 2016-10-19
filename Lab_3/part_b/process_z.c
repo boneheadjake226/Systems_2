@@ -36,7 +36,7 @@ int main(){
 		if( (i % 60) == 0 && i != 0){
 			usleep(300);
 		}
-		struct z_item item = {.num = i+1, .chars = ZZ};
+		struct z_item item = {.num = i+1, .chars = "ZZ"};
 		//item.num = i + 1;
 		//char zz[3] = "ZZ";
 		//item.chars = "ZZ";

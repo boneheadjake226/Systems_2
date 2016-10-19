@@ -37,7 +37,7 @@ int main(){
 		if( (i % 75) == 0 && i != 0){
 			usleep(300);
 		}
-		struct y_item item = {.num = i + 1, .chars = YYY};
+		struct y_item item = {.num = i + 1, .chars = "YYY"};
 		//item.num = i + 1;
 		//char yyy[4] = "YYY";
 		//item.chars = yyy;
