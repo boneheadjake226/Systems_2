@@ -3,9 +3,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#define YYY "YYY"
 typedef struct {
-	char * chars;
+	char chars[4];
 	int num;
 }y_item;
 
@@ -26,9 +25,7 @@ int main(){
 	int buff_y_id = shm_get(102, (void**)&buff_y, 30*sizeof(y_item));
 	
 	sem_signal(w_sync);
-	sem_signal(x_empty);
 	sem_signal(z_empty);
-	sem_wait(y_empty);
 	sem_wait(y_empty);
 	sem_wait(y_empty);
 	
@@ -38,15 +35,14 @@ int main(){
 			usleep(300);
 		}
 		y_item item = {.num = i + 1, .chars = "YYY"};
-		//item.num = i + 1;
-		//char yyy[4] = "YYY";
-		//item.chars = yyy;
-		//printf(" %d%s", item.num, item.chars);
 		
 		sem_wait(y_full);
+		
 		buff_y[in] = item;
 		in = (in + 1) % 30;
+		
 		sem_signal(y_empty);
+		printf("\nProduced an item");
 	}
 	
 	sem_signal(w_sync);

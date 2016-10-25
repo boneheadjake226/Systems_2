@@ -1,23 +1,24 @@
 #include "ssem.h"
 #include "sshm.h"
+#include <string.h>
 #include <stdio.h>
 #include <unistd.h>
 
 typedef struct{
 	//must always be "xx"
-	char * chars;
+	char chars[3];
 	int num;
 } x_item;
 
 typedef struct{
 	//must always be "yyy"
-	char * chars;
+	char chars[4];
 	int num;
 } y_item;
 
 typedef struct{
 	//must always be "zz"
-	char * chars;
+	char chars[3];
 	int num;
 } z_item;
 
@@ -47,39 +48,31 @@ int main(){
 	z_empty = sem_create(66, 0);
 	w_sync = sem_create(67, 0);
 	
-	sem_signal(x_empty);
-	sem_signal(y_empty);
-	sem_signal(z_empty);
-	sem_wait(w_sync);
-	sem_wait(w_sync);
-	sem_wait(w_sync);
 	
 	for(i = 0; i < 500; i++){
 		
 		if( (i % 100) == 0 && i != 0){
 			usleep(300);
 		}
-		
 		sem_wait(x_empty);
-		x_item item_x = {.num = buff_x[x].num, .chars = buff_x[x].chars};
-		printf(" %d%s", item_x.num, item_x.chars);
+		x_item item_x = buff_x[x];
 		x = (x + 1) % 20;
 		sem_signal(x_full);
 		
+		
+		
 		sem_wait(y_empty);
-		y_item item_y = {.num = buff_y[y].num, .chars = buff_y[y].chars};
+		y_item item_y = buff_y[y];
 		y = (y + 1) % 30;
-		//printf(" %d%s", item_y.num, item_y.chars);
 		sem_signal(y_full);
+
 		
 		sem_wait(z_empty);
-		z_item item_z = {.num = buff_z[z].num, .chars = buff_z[z].chars};
+		z_item item_z = buff_z[z];
 		z = (z + 1) % 25;
-		//printf(" %d%s", item_z.num, item_z.chars);
 		sem_signal(z_full);
 		
-		//printf(" %d%s %s%d %d%s", item_x.num, item_x.chars, item_y.chars,
-									//item_y.num, item_z.num, item_z.chars);
+		printf("\n %d%s %s%d %d%s", item_x.num, item_x.chars, item_y.chars, item_y.num, item_z.num, item_z.chars);
 	}
 	
 	sem_signal(w_sync);

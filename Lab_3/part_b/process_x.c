@@ -3,9 +3,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#define XX "xx"
 typedef struct{
-	char * chars;
+	char chars[3];
 	int num;
 } x_item;
 
@@ -13,13 +12,13 @@ typedef struct{
 //Included to open and delete shared buffers, not modify.
 typedef struct {
 	//must always be "yyy"
-	char * chars;
+	char chars[4];
 	int num;
 }y_item;
 
 typedef struct {
 	//must always be "zz"
-	char * chars;
+	char chars[3];
 	int num;
 }z_item;
 //////////////////////////////////////////////////////////////
@@ -45,12 +44,10 @@ int main(){
 	x_item *buff_z;
 	int buff_z_id = shm_get(103, (void**)&buff_z, 25*sizeof(z_item));
 	
-	sem_signal(w_sync);
 	sem_signal(y_empty);
 	sem_signal(z_empty);
-	sem_wait(x_empty);
-	sem_wait(x_empty);
-	sem_wait(x_empty);
+	sem_wait(w_sync);
+	sem_wait(w_sync);
 	
 	for(i = 0; i < 500; i++){
 		
@@ -59,17 +56,14 @@ int main(){
 		}
 		
 		x_item item = {.num = i + 1, .chars = "xx"};
-		//item.num = i + 1;
-		//char xx[3] = "xx";
-		//item.chars = xx;
 		
 		sem_wait(x_full);
+		
 		buff_x[in] = item;
-		
-		//printf(" %d%s", buff_x[in].num, buff_x[in].chars);
-		
 		in = (in + 1) % 20;
+		
 		sem_signal(x_empty);
+		printf("\nProduced an item");
 	}
 	
 	/*

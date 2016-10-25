@@ -3,9 +3,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#define ZZ "ZZ"
 typedef struct{
-	char * chars;
+	char chars[3];
 	int num;
 }z_item;
 
@@ -26,9 +25,7 @@ int main(){
 	int buff_z_id = shm_get(103, (void**)&buff_z, 25*sizeof(z_item));
 	
 	sem_signal(w_sync);
-	sem_signal(x_empty);
 	sem_signal(y_empty);
-	sem_wait(z_empty);
 	sem_wait(z_empty);
 	sem_wait(z_empty);
 
@@ -37,15 +34,14 @@ int main(){
 			usleep(300);
 		}
 		z_item item = {.num = i+1, .chars = "ZZ"};
-		//item.num = i + 1;
-		//char zz[3] = "ZZ";
-		//item.chars = "ZZ";
-		//printf(" %d%s", item.num, item.chars);
 		
 		sem_wait(z_full);
+		
 		buff_z[in] = item;
-		in = (in + 1) % 30;
+		in = (in + 1) % 25;
+		
 		sem_signal(z_empty);
+		printf("\nProduced an item");
 	}
 	
 	sem_signal(w_sync);
