@@ -1,3 +1,11 @@
+/*-------------------------------------|
+  Author: Jake Hill
+  Class: CSE 2431
+  Instructor: Gojko Babic
+  Lab: 4
+  Part: A
+---------------------------------------|*/
+
 #include <pthread.h>
 #include <semaphore.h>
 #include <stdlib.h>
