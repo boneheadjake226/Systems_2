@@ -22,7 +22,7 @@ void * mult_matrix(int *);
 int main(int argc, char *argv[] ){
   
   int num_threads = atoi(argv[1]);
-  pthread tid[num_threads];
+  pthread_t tid[num_threads];
   int i, j;
   float start_time, end_time;
   printf("\nEnter n(<=6000), m(<=3000), p(<=1000): ");
@@ -66,8 +66,10 @@ int main(int argc, char *argv[] ){
     
     //create i threads to compute product
     for(j = 0; j < i; j++){
-      int args[] = {i, j};
-      if( pthread_create(&tid[j], NULL, mult_matrix, &args) < 0){
+      void *args = malloc(sizeof(int) * 2);
+      args[0] = i; //current total threads
+      args[1] = j; //sequence number
+      if( pthread_create(&tid[j], NULL, mult_matrix, args) < 0){
         printf("\nError Creating Thread. Terminating Program");
       }
     }

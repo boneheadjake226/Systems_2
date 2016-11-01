@@ -7,6 +7,12 @@
 #define MAX_M_INPUT 3000
 #define MAX_P_INPUT 1000
 
+//Used to pass multiple arguments to pthread_create
+struct arg_struc {
+  int num_threads;
+  int seq_num;
+  int *result_matrix;
+}
 
 int A[MAX_N_INPUT][MAX_M_INPUT];
 int B[MAX_M_INPUT][MAX_P_INPUT];
@@ -14,7 +20,7 @@ int C[MAX_N_INPUT][MAX_P_INPUT];
 
 int m, n, p;
 
-void * mult_matrix(int, int, int *);
+void * mult_matrix(struct arg_struc);
 
 int main(int argc, char *argv[] ){
   
@@ -43,6 +49,7 @@ int main(int argc, char *argv[] ){
   start_time = gettimeofday();
   if( pthread_create(&tid[0], NULL, mult_matrix, &num_threads, 1, &C) < 0){
     printf("\nError Creating Thread. Terminating Program");
+    return -1;
   }
   pthread_join(tid[0], NULL);
   end_time = gettimeofday();
@@ -63,8 +70,10 @@ int main(int argc, char *argv[] ){
     
     //create i threads to compute product
     for(j = 0; j < i; j++){
-      if( pthread_create(&tid[j], NULL, mult_matrix, &i, &j, &C_prime) < 0){
+      struct arg_struc args = {.num_threads = i,  .seq_num = j, .result_matrix = C_prime};
+      if( pthread_create(&tid[j], NULL, mult_matrix, (void *) &args) < 0){
         printf("\nError Creating Thread. Terminating Program");
+        return -1;
       }
     }
     //wait for all i threads to terminate
@@ -110,16 +119,16 @@ int main(int argc, char *argv[] ){
   *   call this function such that for threads 1 to @num_threads, 
   *   thread 1 has sequence number 1, thread 2 has sequence number 2, etc.
 */
-void * mult_matrix( int num_threads, int sequence, int *result_matrix){
+void * mult_matrix( struct arg_struc args){
   int i, j, k;
   
   
-  for(i = sequence; i < n; i += num_threads){
+  for(i = args.seq_num; i < n; i += args.num_threads){
     for( j = 0; j < p; j++){
-      result_matrix[i][j] = 0;
+      args.result_matrix[i][j] = 0;
       
       for(k = 0; k < m; k++){
-        result_matrix[i][j] += A[i][k] * B[k][j]
+        args.result_matrix[i][j] += A[i][k] * B[k][j]
       }
     }
   }
