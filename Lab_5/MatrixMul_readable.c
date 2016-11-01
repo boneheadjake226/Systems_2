@@ -25,7 +25,7 @@ void * mult_matrix(struct arg_struc);
 int main(int argc, char *argv[] ){
   
   int num_threads = atoi(argv[1]);
-  int tid[num_threads];
+  pthread_t tid[num_threads];
   int i, j;
   float start_time, end_time;
   printf("\nEnter n(<=6000), m(<=3000), p(<=1000): ");
@@ -71,14 +71,14 @@ int main(int argc, char *argv[] ){
     //create i threads to compute product
     for(j = 0; j < i; j++){
       struct arg_struc args = {.num_threads = i,  .seq_num = j, .result_matrix = C_prime};
-      if( pthread_create(&tid[j], NULL, mult_matrix, (void *) &args) < 0){
+      if( pthread_create(&tid[j], NULL, mult_matrix, ((void *)&args) ) < 0){
         printf("\nError Creating Thread. Terminating Program");
         return -1;
       }
     }
     //wait for all i threads to terminate
     for(j = 0; j < i; j++){
-      pthread_join(tid[j],NULL)
+      pthread_join(tid[j],NULL);
     }
     end_time = gettimeofday();
     
@@ -128,7 +128,7 @@ void * mult_matrix( struct arg_struc args){
       args.result_matrix[i][j] = 0;
       
       for(k = 0; k < m; k++){
-        args.result_matrix[i][j] += A[i][k] * B[k][j]
+        args.result_matrix[i][j] += A[i][k] * B[k][j];
       }
     }
   }
