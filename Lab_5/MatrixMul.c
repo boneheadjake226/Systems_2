@@ -12,18 +12,18 @@ int A[MAX_N_INPUT][MAX_M_INPUT];
 int B[MAX_M_INPUT][MAX_P_INPUT];
 int C[MAX_N_INPUT][MAX_P_INPUT];
 
-int m, n, p
+int m, n, p;
 
 void * mult_matrix(int, int, int *);
 
 int main(int argc, char *argv[] ){
   
-  int num_threads = argv[1];
+  int num_threads = atoi(argv[1]);
   int tid[num_threads];
   int i, j;
   float start_time, end_time
   printf("\nEnter n(<=6000), m(<=3000), p(<=1000): ");
-  scanf(" %d %d %d", &n, &m, &p);
+  scanf(" %d %d %d", n, m, p);
   printf("\nYou entered: %d %d %d", n, m, p);
   
   //Initialize A and B values
