@@ -12,21 +12,18 @@ int A[MAX_N_INPUT][MAX_M_INPUT];
 int B[MAX_M_INPUT][MAX_P_INPUT];
 int C[MAX_N_INPUT][MAX_P_INPUT];
 
-//To access from thread initialized with mult_matrix
-int *C_prime;
-
 int m, n, p;
 
-void * mult_matrix(int *);
+void * mult_matrix(int, int, int *);
 
 int main(int argc, char *argv[] ){
   
   int num_threads = atoi(argv[1]);
-  pthread tid[num_threads];
+  int tid[num_threads];
   int i, j;
-  float start_time, end_time;
+  float start_time, end_time
   printf("\nEnter n(<=6000), m(<=3000), p(<=1000): ");
-  scanf(" %d %d %d", n, m, p);
+  scanf(" %d %d %d", &n, &m, &p);
   printf("\nYou entered: %d %d %d", n, m, p);
   
   //Initialize A and B values
@@ -58,7 +55,7 @@ int main(int argc, char *argv[] ){
   }
   
   //Multi-Threading starting with 2 threads
-  C_prime = malloc(sizeof(int) * n * p);
+  int C_prime[n][p];
   int k, comp_error;
   
   for(i = 1; i < num_threads){
@@ -66,8 +63,7 @@ int main(int argc, char *argv[] ){
     
     //create i threads to compute product
     for(j = 0; j < i; j++){
-      int args[] = {i, j};
-      if( pthread_create(&tid[j], NULL, mult_matrix, &args) < 0){
+      if( pthread_create(&tid[j], NULL, mult_matrix, &i, &j, &C_prime) < 0){
         printf("\nError Creating Thread. Terminating Program");
       }
     }
@@ -104,8 +100,8 @@ int main(int argc, char *argv[] ){
 /*
   *Multiplies 1/num_threads of Matricies A and B.
   *
-  *@num_threads (args[0]: number of threads being used to compute the multiplication
-  *@sequence (args[1]): the ordered number of the thread computing the product
+  *@num_threads: number of threads being used to compute the multiplication
+  *@sequence: the ordered number of the thread computing the product
   *   i.e. 1st thread, 2nd thread, ... , nth thread in a n-thread product
   *   calculation.
   *@result_matrix: The matrix to store the result in.
@@ -114,16 +110,16 @@ int main(int argc, char *argv[] ){
   *   call this function such that for threads 1 to @num_threads, 
   *   thread 1 has sequence number 1, thread 2 has sequence number 2, etc.
 */
-void * mult_matrix( int* args){
+void * mult_matrix( int num_threads, int sequence, int *result_matrix){
   int i, j, k;
   
   
-  for(i = args[1]; i < n; i += args[0]){
+  for(i = sequence; i < n; i += num_threads){
     for( j = 0; j < p; j++){
-      C_prime[i][j] = 0;
+      result_matrix[i][j] = 0;
       
       for(k = 0; k < m; k++){
-        C_prime[i][j] += A[i][k] * B[k][j]
+        result_matrix[i][j] += A[i][k] * B[k][j]
       }
     }
   }
