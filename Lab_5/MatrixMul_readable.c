@@ -12,7 +12,7 @@ struct arg_struc {
   int num_threads;
   int seq_num;
   int *result_matrix;
-}
+};
 
 int A[MAX_N_INPUT][MAX_M_INPUT];
 int B[MAX_M_INPUT][MAX_P_INPUT];
@@ -27,7 +27,7 @@ int main(int argc, char *argv[] ){
   int num_threads = atoi(argv[1]);
   int tid[num_threads];
   int i, j;
-  float start_time, end_time
+  float start_time, end_time;
   printf("\nEnter n(<=6000), m(<=3000), p(<=1000): ");
   scanf(" %d %d %d", &n, &m, &p);
   printf("\nYou entered: %d %d %d", n, m, p);
