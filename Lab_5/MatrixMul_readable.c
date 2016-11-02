@@ -10,7 +10,7 @@
 struct arg_struc {
   int num_threads;
   int seq_num;
-  int *results_matrix;
+  int *result_matrix;
 };
 
 int A[MAX_N_INPUT][MAX_M_INPUT];
@@ -46,7 +46,7 @@ int main(int argc, char *argv[] ){
     }
   }
   
-  int *C = malloc( n * P * sizeof(int));
+  int C[n][p];
   
   //Baseline
   start_time = gettimeofday();
@@ -67,7 +67,7 @@ int main(int argc, char *argv[] ){
   
   //Multi-Threading starting with 2 threads
   int k, comp_error;
-  int C_prime = malloc(n * p * sizeof(int));
+  int C_prime[n][p];
   
   for(i = 1; i < num_threads; i++){
     start_time = gettimeofday();
@@ -90,7 +90,7 @@ int main(int argc, char *argv[] ){
     comp_error = 0;
     for(j = 0; j < n; j ++){
       for(k = 0; k < p; k++){
-        if((int[n][p]) C[j][k] != (int[n][p]) C_prime[j][k]){
+        if( C[j][k] != C_prime[j][k]){
           comp_error = 1;
           break;
         }
