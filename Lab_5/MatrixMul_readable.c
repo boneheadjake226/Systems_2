@@ -88,7 +88,7 @@ int main(int argc, char *argv[] ){
     comp_error = 0;
     for(j = 0; j < n; j ++){
       for(k = 0; k < p; k++){
-        if(C[j][k] != C_prime[j][k]){
+        if(&C[j][k] != &C_prime[j][k]){
           comp_error = 1;
           break;
         }
@@ -123,7 +123,7 @@ int main(int argc, char *argv[] ){
 */
 void * mult_matrix( void *arguments){
   int i, j, k;
-  struct arg_struct *args = (struct arg_struct) arguments;
+  struct arg_struct *args = (struct arg_struct*) arguments;
   
   for(i = args->seq_num; i < n; i += args->num_threads){
     for( j = 0; j < p; j++){
