@@ -1,5 +1,4 @@
 #include <pthread.h>
-#include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -11,11 +10,14 @@
 struct arg_struc {
   int num_threads;
   int seq_num;
-  int *result_matrix;
+  int *results_matrix;
 };
 
 int A[MAX_N_INPUT][MAX_M_INPUT];
 int B[MAX_M_INPUT][MAX_P_INPUT];
+//int C[MAX_N_INPUT][MAX_P_INPUT];
+//int C_prime[MAX_N_INPUT][MAX_P_INPUT];
+
 
 int m, n, p;
 
@@ -44,11 +46,11 @@ int main(int argc, char *argv[] ){
     }
   }
   
-  int *C = malloc(sizeof(int) * n * p);
+  int *C = malloc( n * P * sizeof(int));
   
   //Baseline
   start_time = gettimeofday();
-  struct arg_struc baseline = {.num_threads = 1, .seq_num = 0, .result_matrix = C};
+  struct arg_struc baseline = {.num_threads = 1, .seq_num = 0, .result_matrix = &(C[0][0])};
   if( pthread_create(&tid[0], NULL, mult_matrix, (void *) &baseline) < 0){
     printf("\nError Creating Thread. Terminating Program");
     return -1;
@@ -64,15 +66,15 @@ int main(int argc, char *argv[] ){
   }
   
   //Multi-Threading starting with 2 threads
-  int *C_prime = malloc(sizeof(int) * n * p);
   int k, comp_error;
+  int C_prime = malloc(n * p * sizeof(int));
   
   for(i = 1; i < num_threads; i++){
     start_time = gettimeofday();
     
     //create i threads to compute product
     for(j = 0; j < i; j++){
-      struct arg_struc args = {.num_threads = i,  .seq_num = j, .result_matrix = C_prime};
+      struct arg_struc args = {.num_threads = i,  .seq_num = j, .result_matrix = &(C_prime[0][0])};
       if( pthread_create(&tid[j], NULL, mult_matrix, (void *)&args ) < 0){
         printf("\nError Creating Thread. Terminating Program");
         return -1;
@@ -127,10 +129,10 @@ void * mult_matrix( void *arguments){
   
   for(i = args->seq_num; i < n; i += args->num_threads){
     for( j = 0; j < p; j++){
-      args->result_matrix[i][j] = 0;
+      *(args->result_matrix + i*n + j) = 0;
       
       for(k = 0; k < m; k++){
-        args->result_matrix[i][j] += A[i][k] * B[k][j];
+        *(args->result_matrix + i*n + j) += A[i][k] * B[k][j];
       }
     }
   }
