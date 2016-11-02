@@ -103,7 +103,7 @@ int main(int argc, char *argv[] ){
     else{ printf("No Error\n\n"); }
   }
   
-  
+  return 0;
   
 }
 
@@ -134,7 +134,7 @@ void * mult_matrix( void *arg_struc arguments){
     }
   }
   
-  pthread_exit(NULL)
+  pthread_exit(NULL);
 }
 
 
