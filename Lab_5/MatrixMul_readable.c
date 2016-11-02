@@ -125,7 +125,7 @@ int main(int argc, char *argv[] ){
 */
 void * mult_matrix( void *arguments){
   int i, j, k;
-  struct arg_struct *args = (struct arg_struct*) arguments;
+  struct arg_struc *args = (struct arg_struc*) arguments;
   
   for(i = args->seq_num; i < n; i += args->num_threads){
     for( j = 0; j < p; j++){
