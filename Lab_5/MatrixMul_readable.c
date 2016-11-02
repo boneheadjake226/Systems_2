@@ -88,7 +88,7 @@ int main(int argc, char *argv[] ){
     comp_error = 0;
     for(j = 0; j < n; j ++){
       for(k = 0; k < p; k++){
-        if(&C[j][k] != &C_prime[j][k]){
+        if((int[n][p]) C[j][k] != (int[n][p]) C_prime[j][k]){
           comp_error = 1;
           break;
         }
