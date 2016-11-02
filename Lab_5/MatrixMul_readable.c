@@ -16,7 +16,6 @@ struct arg_struc {
 
 int A[MAX_N_INPUT][MAX_M_INPUT];
 int B[MAX_M_INPUT][MAX_P_INPUT];
-int C[MAX_N_INPUT][MAX_P_INPUT];
 
 int m, n, p;
 
@@ -45,6 +44,8 @@ int main(int argc, char *argv[] ){
     }
   }
   
+  int *C = malloc(sizeof(int) * n * p);
+  
   //Baseline
   start_time = gettimeofday();
   struct arg_struc baseline = {.num_threads = 1, .seq_num = 0, .result_matrix = C};
@@ -63,7 +64,7 @@ int main(int argc, char *argv[] ){
   }
   
   //Multi-Threading starting with 2 threads
-  int C_prime[n][p];
+  int *C_prime = malloc(sizeof(int) * n * p);
   int k, comp_error;
   
   for(i = 1; i < num_threads; i++){
