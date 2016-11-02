@@ -20,7 +20,7 @@ int C[MAX_N_INPUT][MAX_P_INPUT];
 
 int m, n, p;
 
-void * mult_matrix(struct arg_struc);
+void * mult_matrix(void * arg_struc);
 
 int main(int argc, char *argv[] ){
   
@@ -71,7 +71,7 @@ int main(int argc, char *argv[] ){
     //create i threads to compute product
     for(j = 0; j < i; j++){
       struct arg_struc args = {.num_threads = i,  .seq_num = j, .result_matrix = C_prime};
-      if( pthread_create(&tid[j], NULL, mult_matrix, ((void *)&args) ) < 0){
+      if( pthread_create(&tid[j], NULL, mult_matrix, (void *)&args ) < 0){
         printf("\nError Creating Thread. Terminating Program");
         return -1;
       }
@@ -119,16 +119,16 @@ int main(int argc, char *argv[] ){
   *   call this function such that for threads 1 to @num_threads, 
   *   thread 1 has sequence number 1, thread 2 has sequence number 2, etc.
 */
-void * mult_matrix( struct arg_struc args){
+void * mult_matrix( void *arg_struc arguments){
   int i, j, k;
+  struct arg_struct *args = (struct arg_struct) arguments;
   
-  
-  for(i = args.seq_num; i < n; i += args.num_threads){
+  for(i = args->seq_num; i < n; i += args->num_threads){
     for( j = 0; j < p; j++){
-      args.result_matrix[i][j] = 0;
+      args->result_matrix[i][j] = 0;
       
       for(k = 0; k < m; k++){
-        args.result_matrix[i][j] += A[i][k] * B[k][j];
+        args->result_matrix[i][j] += A[i][k] * B[k][j];
       }
     }
   }
