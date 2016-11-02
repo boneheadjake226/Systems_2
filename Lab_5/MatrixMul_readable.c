@@ -48,7 +48,7 @@ int main(int argc, char *argv[] ){
   //Baseline
   start_time = gettimeofday();
   struct arg_struc baseline = {.num_threads = 1, .seq_num = 0, .result_matrix = &C};
-  if( pthread_create(&tid[0], NULL, mult_matrix, baseline) < 0){
+  if( pthread_create(&tid[0], NULL, mult_matrix, (void *) &baseline) < 0){
     printf("\nError Creating Thread. Terminating Program");
     return -1;
   }
