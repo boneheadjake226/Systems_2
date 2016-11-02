@@ -47,7 +47,7 @@ int main(int argc, char *argv[] ){
   
   //Baseline
   start_time = gettimeofday();
-  struct arg_struc baseline = {.num_threads = 1, .seq_num = 0, .result_matrix = &C};
+  struct arg_struc baseline = {.num_threads = 1, .seq_num = 0, .result_matrix = C};
   if( pthread_create(&tid[0], NULL, mult_matrix, (void *) &baseline) < 0){
     printf("\nError Creating Thread. Terminating Program");
     return -1;
@@ -71,7 +71,7 @@ int main(int argc, char *argv[] ){
     
     //create i threads to compute product
     for(j = 0; j < i; j++){
-      struct arg_struc args = {.num_threads = i,  .seq_num = j, .result_matrix = &C_prime};
+      struct arg_struc args = {.num_threads = i,  .seq_num = j, .result_matrix = C_prime};
       if( pthread_create(&tid[j], NULL, mult_matrix, (void *)&args ) < 0){
         printf("\nError Creating Thread. Terminating Program");
         return -1;
@@ -120,7 +120,7 @@ int main(int argc, char *argv[] ){
   *   call this function such that for threads 1 to @num_threads, 
   *   thread 1 has sequence number 1, thread 2 has sequence number 2, etc.
 */
-void * mult_matrix( void *arg_struc arguments){
+void * mult_matrix( void *arguments){
   int i, j, k;
   struct arg_struct *args = (struct arg_struct) arguments;
   
