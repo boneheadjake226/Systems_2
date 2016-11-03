@@ -1,6 +1,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
 #define MAX_N_INPUT 6000
 #define MAX_M_INPUT 3000
@@ -29,7 +30,7 @@ int main(int argc, char *argv[] ){
   int num_threads = atoi(argv[1]);
   pthread_t tid[num_threads];
   int i, j;
-  float start_time, end_time;
+  struct timeval start_time, end_time;
   
   //input loop
   do{
@@ -71,7 +72,7 @@ int main(int argc, char *argv[] ){
   printf("\nAllocated memory for C and C_prime");
   
   //Baseline
-  start_time = gettimeofday();
+  gettimeofday(&start_time, NULL);
   struct arg_struc *baseline = malloc(sizeof(struct arg_struc));
   
   baseline->num_threads = 1;
@@ -87,10 +88,10 @@ int main(int argc, char *argv[] ){
   printf("\n---Waiting for baseline computation---");
   
   pthread_join(tid[0], NULL);
-  end_time = gettimeofday();
+  gettimeofday(&end_time, NULL);
   
   printf("\nThread\t\tSeconds");
-  printf("\n1\t\t %.2f", (end_time - start_time));
+  printf("\n1\t\t %ld", (end_time.tv_sec - start_time.tv_sec));
   
   if(num_threads <= 1){
     return 0;
@@ -101,7 +102,7 @@ int main(int argc, char *argv[] ){
   struct arg_struc *thread_args = malloc(sizeof(struct arg_struc) * num_threads);
   
   for(i = 1; i < num_threads; i++){
-    start_time = gettimeofday();
+    gettimeofday(&start_time, NULL);
     
     //create i threads to compute product
     for(j = 0; j < i; j++){
@@ -119,7 +120,7 @@ int main(int argc, char *argv[] ){
     for(j = 0; j < i; j++){
       pthread_join(tid[j],NULL);
     }
-    end_time = gettimeofday();
+    gettimeofday(&end_time, NULL);
     
     //compare C to C_prime
     comp_error = 0;
@@ -135,7 +136,7 @@ int main(int argc, char *argv[] ){
       }
     }
     
-    printf("\n%d\t\t%.2f", (i+1), (end_time - start_time));
+    printf("\n%d\t\t%ld", (i+1), (end_time.tv_sec - start_time.tv_sec));
     printf("\ncomparison: ");
     if(comp_error){ printf("Error\n\n"); }
     else{ printf("No Error\n\n"); }
