@@ -1,0 +1,55 @@
+
+|Thread_3| account_1: 103100  account_2: 110800  account_3: 86100  sum: 300000
+|Thread_1| account_1: 100000  account_2: 112800  account_3: 87200  sum: 300000
+|Thread_2| account_1: 99300  account_2: 107500  account_3: 93200  sum: 300000
+|Thread_1| account_1: 81600  account_2: 128000  account_3: 90400  sum: 300000
+|Thread_2| account_1: 0  account_2: 199900  account_3: 100100  sum: 300000
+|Thread_2| account_1: 0  account_2: 99900  account_3: 200100  sum: 300000
+|Thread_1| account_1: -100  account_2: 100  account_3: 300000  sum: 300000
+|Thread_1| account_1: -100100  account_2: 100100  account_3: 300000  sum: 300000
+|Thread_1| account_1: -200100  account_2: 200100  account_3: 300000  sum: 300000
+|Thread_3| account_1: -299900  account_2: 300000  account_3: 299900  sum: 300000
+|Thread_3| account_1: -199900  account_2: 300000  account_3: 199900  sum: 300000
+|Thread_3| account_1: -99900  account_2: 300000  account_3: 99900  sum: 300000
+|Thread_3| account_1: 100  account_2: 300000  account_3: -100  sum: 300000
+|Thread_3| account_1: 100100  account_2: 300000  account_3: -100100  sum: 300000
+|Thread_3| account_1: 200100  account_2: 300000  account_3: -200100  sum: 300000
+|Thread_2| account_1: 250000  account_2: 299900  account_3: -249900  sum: 300000
+|Thread_2| account_1: 250000  account_2: 199900  account_3: -149900  sum: 300000
+|Thread_1| account_1: 249900  account_2: 100100  account_3: -50000  sum: 300000
+|Thread_1| account_1: 149900  account_2: 200100  account_3: -50000  sum: 300000
+|Thread_1| account_1: 49900  account_2: 300100  account_3: -50000  sum: 300000
+|Thread_3| account_1: 100  account_2: 400000  account_3: -100100  sum: 300000
+|Thread_3| account_1: 100100  account_2: 400000  account_3: -200100  sum: 300000
+|Thread_3| account_1: 200000  account_2: 400000  account_3: -300000  sum: 300000
+|Thread_2| account_1: 200000  account_2: 399900  account_3: -299900  sum: 300000
+|Thread_2| account_1: 200000  account_2: 299900  account_3: -199900  sum: 300000
+|Thread_2| account_1: 200000  account_2: 199900  account_3: -99900  sum: 300000
+|Thread_1| account_1: 199900  account_2: 100100  account_3: 0  sum: 300000
+|Thread_3| account_1: 100000  account_2: 200000  account_3: 0  sum: 300000
+|Thread_2| account_1: 100000  account_2: 199900  account_3: 100  sum: 300000
+|Thread_3| account_1: 100000  account_2: 100000  account_3: 100000  sum: 300000
+|Thread_3| account_1: 103100  account_2: 110800  account_3: 86100  sum: 300000
+|Thread_1| account_1: 100000  account_2: 112800  account_3: 87200  sum: 300000
+|Thread_2| account_1: 99300  account_2: 107500  account_3: 93200  sum: 300000
+|Thread_1| account_1: 81600  account_2: 128000  account_3: 90400  sum: 300000
+|Thread_2| account_1: 0  account_2: 199900  account_3: 100100  sum: 300000
+|Thread_2| account_1: 0  account_2: 99900  account_3: 200100  sum: 300000
+|Thread_1| account_1: -100  account_2: 100  account_3: 300000  sum: 300000
+|Thread_1| account_1: -100100  account_2: 100100  account_3: 300000  sum: 300000
+|Thread_1| account_1: -200100  account_2: 200100  account_3: 300000  sum: 300000
+|Thread_3| account_1: -299900  account_2: 300000  account_3: 299900  sum: 300000
+|Thread_3| account_1: -199900  account_2: 300000  account_3: 199900  sum: 300000
+|Thread_3| account_1: -99900  account_2: 300000  account_3: 99900  sum: 300000
+|Thread_3| account_1: 100  account_2: 300000  account_3: -100  sum: 300000
+|Thread_3| account_1: 100100  account_2: 300000  account_3: -100100  sum: 300000
+|Thread_3| account_1: 200100  account_2: 300000  account_3: -200100  sum: 300000
+|Thread_2| account_1: 250000  account_2: 299900  account_3: -249900  sum: 300000
+|Thread_2| account_1: 250000  account_2: 199900  account_3: -149900  sum: 300000
+|Thread_1| account_1: 249900  account_2: 100100  account_3: -50000  sum: 300000
+|Thread_1| account_1: 149900  account_2: 200100  account_3: -50000  sum: 300000
+|Thread_1| account_1: 49900  account_2: 300100  account_3: -50000  sum: 300000
+|Thread_3| account_1: 100  account_2: 400000  account_3: -100100  sum: 300000
+|Thread_3| account_1: 100100  
+Times sum was wrong: 0
+thread_4 exiting

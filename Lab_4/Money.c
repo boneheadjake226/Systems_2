@@ -74,7 +74,6 @@ int main(){
   
   sem_post(&sync_4);
   
-  //pthread_exit(NULL);
   return 0;
 }
 

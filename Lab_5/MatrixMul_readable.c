@@ -6,22 +6,23 @@
 #define MAX_M_INPUT 3000
 #define MAX_P_INPUT 1000
 
-//Used to pass multiple arguments to pthread_create
+//Used to pass multiple arguments to pthread_create start-up process
 struct arg_struc {
   int num_threads;
   int seq_num;
-  int *result_matrix;
+  int **result_matrix;
 };
 
-int A[MAX_N_INPUT][MAX_M_INPUT];
-int B[MAX_M_INPUT][MAX_P_INPUT];
-//int C[MAX_N_INPUT][MAX_P_INPUT];
-//int C_prime[MAX_N_INPUT][MAX_P_INPUT];
-
-
+//Global varibles accessed by threaded processes
+int **A;
+int **B;
+int **C;
+int **C_prime;
 int m, n, p;
 
-void * mult_matrix(void * arg_struc);
+//Public functions
+void * mult_matrix(void *arg_struc);
+void clear_matrix(int **matrix, int rows, int cols);
 
 int main(int argc, char *argv[] ){
   
@@ -29,32 +30,62 @@ int main(int argc, char *argv[] ){
   pthread_t tid[num_threads];
   int i, j;
   float start_time, end_time;
-  printf("\nEnter n(<=6000), m(<=3000), p(<=1000): ");
-  scanf(" %d %d %d", &n, &m, &p);
-  printf("\nYou entered: %d %d %d", n, m, p);
+  
+  //input loop
+  do{
+    printf("\nEnter n(<=6000), m(<=3000), p(<=1000): ");
+    scanf(" %d %d %d", &n, &m, &p);
+    printf("\nYou entered: %d %d %d", n, m, p);
+  }while(n > MAX_N_INPUT && m > MAX_M_INPUT &&  p > MAX_P_INPUT);
+  
+  A = (int **)malloc(n * sizeof(int *));
+  B = (int **)malloc(m * sizeof(int *));
+  C = (int **)malloc(n * sizeof(int *));
+  C_prime = (int **)malloc(n * sizeof(int *));
   
   //Initialize A and B values
   for(i = 0; i < n; i++){
+    A[i] = (int *)malloc(m * sizeof(int));
     for(j = 0; j < m; j++){
       A[i][j] = i * j;
     }
   }
   
+  //Debug Message
+  printf("\nInitialized A and B");
+  
   for( i = 0; i < m; i++){
+    B[i] = (int *)malloc(p * sizeof(int));
     for( j = 0; j < p; j++){
       B[i][j] = i + j;
     }
   }
   
-  int C[n][p];
+  //Finish allocating memory for C and C_prime without initialization
+  for( i = 0; i < n; i++){
+    C[i] = (int *)malloc( p * sizeof(int));
+    C_prime[i] = (int *)malloc( p * sizeof(int));
+  }
+  
+  //Debug Message
+  printf("\nAllocated memory for C and C_prime");
   
   //Baseline
   start_time = gettimeofday();
-  struct arg_struc baseline = {.num_threads = 1, .seq_num = 0, .result_matrix = &(C[0][0])};
-  if( pthread_create(&tid[0], NULL, mult_matrix, (void *) &baseline) < 0){
+  struct arg_struc *baseline = malloc(sizeof(struct arg_struc));
+  
+  baseline->num_threads = 1;
+  baseline->seq_num = 0;
+  baseline->result_matrix = C;
+  //struct arg_struc baseline = {.num_threads = 1, .seq_num = 0, .result_matrix = C};
+  if( pthread_create(&tid[0], NULL, mult_matrix, (void *)baseline) < 0){
     printf("\nError Creating Thread. Terminating Program");
     return -1;
   }
+  
+  //Debug Message
+  printf("\n---Waiting for baseline computation---");
+  
   pthread_join(tid[0], NULL);
   end_time = gettimeofday();
   
@@ -67,15 +98,19 @@ int main(int argc, char *argv[] ){
   
   //Multi-Threading starting with 2 threads
   int k, comp_error;
-  int C_prime[n][p];
+  struct arg_struc *thread_args = malloc(sizeof(struct arg_struc) * num_threads);
   
   for(i = 1; i < num_threads; i++){
     start_time = gettimeofday();
     
     //create i threads to compute product
     for(j = 0; j < i; j++){
-      struct arg_struc args = {.num_threads = i,  .seq_num = j, .result_matrix = &(C_prime[0][0])};
-      if( pthread_create(&tid[j], NULL, mult_matrix, (void *)&args ) < 0){
+      //struct arg_struc args = {.num_threads = i + 1,  .seq_num = j, .result_matrix = C_prime};
+      thread_args[j].num_threads = i + 1;
+      thread_args[j].seq_num = j;
+      thread_args[j].result_matrix = C_prime;
+      
+      if( pthread_create(&tid[j], NULL, &mult_matrix, (void *)&thread_args[j] ) < 0){
         printf("\nError Creating Thread. Terminating Program");
         return -1;
       }
@@ -100,7 +135,7 @@ int main(int argc, char *argv[] ){
       }
     }
     
-    printf("/n%.2f\t\t", (end_time - start_time));
+    printf("\n%d\t\t%.2f", (i+1), (end_time - start_time));
     printf("\ncomparison: ");
     if(comp_error){ printf("Error\n\n"); }
     else{ printf("No Error\n\n"); }
@@ -125,14 +160,32 @@ int main(int argc, char *argv[] ){
 */
 void * mult_matrix( void *arguments){
   int i, j, k;
-  struct arg_struc *args = (struct arg_struc*) arguments;
+  
+  //Debug Message
+  printf("\nBefore parsing args from pthread_create");
+  printf("\narguments: %d", arguments);
+  printf("\nAfter trying to print arguments");
+  
+  //Debug Message
+  printf("\nsizeof(arguments): %d", sizeof((struct arg_struc*)arguments));
+  printf("\nsizeof(struct arg_struc *): %d", sizeof(struct arg_struc*));
+  
+  //TODO: problem statement
+  struct arg_struc *args = (struct arg_struc *)arguments;
+  
+  //Debug Message
+  printf("\nAfter assigning args within new thread");
+  
+  //Debug Message -- Creating Seg Fault
+  printf("\nCreating Thread [%d]", args->seq_num);
+  
   
   for(i = args->seq_num; i < n; i += args->num_threads){
     for( j = 0; j < p; j++){
-      *(args->result_matrix + i*n + j) = 0;
+      args->result_matrix[i][j] = 0;
       
       for(k = 0; k < m; k++){
-        *(args->result_matrix + i*n + j) += A[i][k] * B[k][j];
+        args->result_matrix[i][j] += A[i][k] * B[k][j];
       }
     }
   }
@@ -140,7 +193,16 @@ void * mult_matrix( void *arguments){
   pthread_exit(NULL);
 }
 
-
+void clear_matrix(int **matrix, int rows, int cols){
+  int i, j;
+  
+  for(i = 0; i < rows; i++){
+    for(j = 0; j < cols; j++){
+      matrix[i][j] = 0;
+    }
+  }
+  
+}
 
 
 
